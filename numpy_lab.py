@@ -109,7 +109,7 @@ plt.scatter(x_test, y_test, color='orange', label='Test Data', marker='x')
 plt.title("Train Fit Line with Train and Test Data")
 plt.show()
 
-# loading data from a CSV file
+# loading data from a CSV files
 data = pd.read_csv('BostonHousing.csv')
 # displaying basic information about the dataset
 print(data.head())
