@@ -1,6 +1,7 @@
-# importing necessary libraries
+# # importing necessary libraries
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 # creating numpy arrays
 x_array = np.array([1, 2, 3, 4, 5, 6])
 y_array = np.array([52, 58, 66, 71, 82, 94])
@@ -58,3 +59,77 @@ plt.scatter(x_test, y_test, color='orange', label='Test Data', marker='x')
 plt.title("Train Fit Line with Train and Test Data")
 plt.legend()
 plt.show()
+# creating new numpy arrays 
+x = np.array([50,55,60,65,70,75,80,85,90,95,100,110])
+y=np.array([300,320,340,360,380,400,420,440,460,480,500,550])
+# displaying shape of arrays 
+print(x.shape)
+print(y.shape)
+plt.plot(x,y,color='red',marker='o',linestyle='--')
+#split data into train and test 
+split_index=int(0.8*len(x))
+x_train=x[:split_index]
+x_test=x[split_index:]
+y_train=y[:split_index]
+y_test=y[split_index:]
+print("x_train",x_train)
+print("x_test",x_test)
+print("y_train",y_train)
+print("y_test",y_test)
+# making the mean of x and y 
+x_mean=np.mean(x)
+y_mean=np.mean(y)
+
+n=len(x_train)
+m=(n*np.sum(x_train*y_train)-np.sum(x_train)*np.sum(y_train)) / (n*np.sum(x_train**2)-(np.sum(x_train)**2))
+b=(np.sum(y_train)-m*np.sum(x_train))/n
+print("slope:",m)
+print("intercept:",b)
+
+# evaluating on test only
+y_pred=m*x_test + b
+print("Predicted values:",y_pred)
+# comparing actual vs predicted
+print("x_test:",x_test)
+print("actual y_test:",y_test)
+print("predicted y_test:",y_pred)
+# evaluating performance
+mse=np.mean((y_test - y_pred)**2)
+print("Mean Squared Error:",round(mse,2))
+
+#predict for a house price after training 
+new_x=np.array([130])
+new_y=m*new_x + b
+print("Predicted value for new_x (130):",new_y)
+
+# plotting the train-fit line with both train/test points 
+plt.plot(x_train, m*x_train + b, color='green', label='Train Fit Line')
+plt.scatter(x_train, y_train, color='blue', label='Train Data', marker='o')
+plt.scatter(x_test, y_test, color='orange', label='Test Data', marker='x')
+plt.title("Train Fit Line with Train and Test Data")
+plt.show()
+
+# loading data from a CSV file
+data = pd.read_csv('BostonHousing.csv')
+# displaying basic information about the dataset
+print(data.head())
+print(data.tail())
+print(data.shape)
+print(data.info())
+
+# data cleaning  by checking for missing values 
+
+print("The cleaning data:", data.isnull())
+print(" the duplicate data:", data.duplicated())
+print(" the descriptive statistics:", data.describe())
+
+# preparing data for training and testing x and y arrays 
+
+x_data =data.rename(columns={'medv':'price'})
+y_data =data.rename (columns={'rm':'size'})
+
+x_size = x_data['size']
+y_price = y_data['price']
+print("x_size:", x_size)
+print("y_price:", y_price)
+
