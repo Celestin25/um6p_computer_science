@@ -31,14 +31,5 @@ model = Pipeline([("scaler", StandardScaler()), ("ann", MLPClassifier(hidden_lay
 model.fit(x_train, y_train)
 
 y_pred = model.predict(x_test)
-acc = accuracy_score(y_test, y_pred)
-print(f"Model Accuracy: {acc:.3f}%")
-# predicting a new sample digit
-new_sample = x_test[0].reshape(1, -1)
-new_pred = model.predict(new_sample)[0]
-print("New Sample Prediction:", new_pred)
-# visualizing the new sample digit
-plt.imshow(new_sample.reshape(8, 8), cmap='gray')
-plt.title(f"New Sample Digit Prediction: {new_pred}")
-plt.axis('off')
-plt.show()
+accuracy = accuracy_score(y_test, y_pred)
+print("Test Accuracy:", round(accuracy, 3))
